@@ -6,6 +6,15 @@
 #include <memory>
 #include <vector>
 
+class Object {
+public:
+	Object();
+	
+	~Object();
+
+private:
+	int sensor
+};
 class Sensor {
 public:
 	// Default Constructor
@@ -24,27 +33,27 @@ public:
 	void foo(int a, double b, std::string const& s);
 
 private:
-	int charles;
+	int intensity;
 };
 
-Sensor::Sensor() : charles(0)
+Sensor::Sensor() : intensity(0)
 {
-	std::cout << "Constructing: " << charles << std::endl;
+	std::cout << "Constructing: " << intensity << std::endl;
 }
 
-Sensor::Sensor(Sensor const& other) : charles(other.charles)
+Sensor::Sensor(Sensor const& other) : intensity(other.charles)
 {
-	std::cout << "CopyConstructing: " << charles << std::endl;
+	std::cout << "CopyConstructing: " << intensity << std::endl;
 }
 
 Sensor::~Sensor() {
-	std::cout << "Destructing: " << charles << std::endl;
+	std::cout << "Destructing: " << intensity << std::endl;
 }
 
 Sensor& Sensor::operator=(Sensor const& other)
 {
-	charles = other.charles;
-	std::cout << "CopyAssigning: " << charles << std::endl;
+	intensity = other.charles;
+	std::cout << "CopyAssigning: " << intensity << std::endl;
 }
 
 void Sensor::foo(int a, double b, std::string const& s) {
