@@ -1,0 +1,12 @@
+// Complete the sockMerchant function below.
+int sockMerchant(int n, vector<int> ar) {
+    int pair_count = 0;
+    std::unordered_map<int, int> my_map;
+    for (auto sock : ar) {
+        my_map[sock]++;
+    }
+    for (auto key_val : my_map) {
+        pair_count += (key_val.second / 2);
+    }
+    return pair_count;
+}

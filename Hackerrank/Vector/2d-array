@@ -1,0 +1,34 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+
+void print_vector_element(const std::vector<int>& vec, int index) {
+    std::cout << vec[index];
+}
+
+int main() {
+    int array_count;
+    int query_count;
+    std::cin >> array_count >> query_count;
+    std::vector < std::vector<int> > arrays;
+    int array_length;
+    for (int i = 0; i < array_count; i++) {
+        std::cin >> array_length;
+        std::vector<int> my_row;
+        int temp;
+        for (int j = 0; j < array_length; j++){
+            std::cin >> temp;
+            my_row.push_back(temp);
+        }
+        arrays.push_back(my_row);
+    }
+    int vector_index;
+    int value_index;
+    for (int i = 0; i < query_count; i++) {
+        std::cin >> vector_index >> value_index;
+        std::cout << arrays[vector_index].at(value_index) << std::endl;
+    }
+    return 0;
+}

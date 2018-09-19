@@ -1,0 +1,15 @@
+#include <iostream>
+#include <string>
+
+int main() {
+    std::string first;
+    std::string second;
+    std::cin >> first >> second;
+    std::cout << first.size() << " " << second.size() << std::endl << first + second << std::endl;
+    char   c0 = first[0];
+    char   c1 = second[0];
+    first[0] = c1;
+    second[0] = c0;
+    std::cout << first << " " << second << std::endl;
+    return 0;
+}

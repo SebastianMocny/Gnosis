@@ -1,0 +1,10 @@
+// Complete the oddNumbers function below.
+vector<int> oddNumbers(int l, int r) {
+    vector<int> nums;
+    for (int i = l; i <= r; i++) {
+        if (i % 2) {
+            nums.emplace_back(i);
+        }
+    }
+    return nums;
+}

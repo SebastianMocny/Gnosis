@@ -1,0 +1,18 @@
+// Complete the countingValleys function below.
+int countingValleys(int n, const std::string &s) {
+    int cur_elevation(0);
+    int prev_elevation(0);
+    int count(0);
+    for (auto c : s) {
+        if (c == 'U') {
+            cur_elevation++;
+        } else if (c == 'D') {
+            cur_elevation--;
+        }
+        if (cur_elevation == 0 && prev_elevation < 0) {
+            count++;
+        }
+        prev_elevation = cur_elevation;
+    }
+    return count;
+}

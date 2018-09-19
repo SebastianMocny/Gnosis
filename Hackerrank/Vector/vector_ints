@@ -1,0 +1,10 @@
+// Complete the findNumber function below.
+string findNumber(vector<int> arr, int k) {
+    for (auto& i : arr) {
+        cout << i;
+        if (i == k) {
+            return "YES";
+        }
+    } 
+    return "NO";
+}
