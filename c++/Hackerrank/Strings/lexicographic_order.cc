@@ -53,19 +53,21 @@
 // Complete the morganAndString function below.
 std::string morganAndString(const std::string& a, const std::string& b) {
     std::string combined_string;
-    std::string::const_iterator si_a;
-    std::string::const_iterator si_b = b.begin();
-    for (si_a = a.begin(); si_a < a.end(); si_a++) {
-        while (si_b < b.end() && *si_b < *si_a) {
-            combined_string += *si_b;
-            si_b++;
-        }
-        combined_string += *si_a;
-    }
-    while (si_b < b.end()) {
-        combined_string += *si_b;
-        si_b++;
-    }
+	auto it_a = a.begin(), it_b = b.begin(); //iterators
+
+	while (it_a != a.end() && it_b != b.end()) {
+		if (*it_a <= *it_b) {
+			combined_string += *it_a;
+			it_a++;
+		} else if (*it_a > *it_b) {
+			combined_string += *it_b;
+			it_b++;
+		}
+	}
+	// Add the leftover characters. Only one of these should have its iterator != string.end()
+	combined_string.append(it_a, a.end());
+	combined_string.append(it_b, b.end());	
+
     return combined_string;
 }
 
