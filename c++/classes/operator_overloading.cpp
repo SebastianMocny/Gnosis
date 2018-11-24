@@ -1,3 +1,15 @@
+/*
+ *
+ * This is my template for document boilerplate. 
+ * Last update to this template is: November 12, 2018
+ *
+ * TODO: Add licensing info. For example, Apache 2.0
+ *
+ *
+ * Author: Sebastian Mocny
+ * Date of file creation: Some time before November 12, 2018
+ */
+
 #include <iostream>
 
 class Foo {
