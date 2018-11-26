@@ -20,6 +20,7 @@ class Grid {
 		std::vector<std::vector<int>> val_grid;
 		std::vector<std::vector<int>> sums_grid;
 		std::vector<std::vector<int>> construct_zero_grid(const int& x_columns, const int& y_rows);
+		bool sums_grid_is_valid = false;
 		void update_sums_grid(); // Worst case o(n^4). This will run through and generate the values to the sums_grid. TODO: If the grid is already generated, then only sections that were affected by an update need to be worked out - implementation is up to debate
 	public:
 		Grid();
@@ -30,7 +31,7 @@ class Grid {
 		int query_span_simple(const int& x1, const int& y1, const int& x2, const int& y2); // O(n^2)
 
 		void update_value_complex(const int& x, const int& y, const int& val); // O(1) - See note below
-		int query_span_sum_complex(const int& x1, const int& y1, const int& x2, const int& y2); // O(1) if update has not been called. Otherwise, a worst case O(n^4) "update" operation is required
+		int query_span_complex(const int& x1, const int& y1, const int& x2, const int& y2); // O(1) if update has not been called. Otherwise, a worst case O(n^4) "update" operation is required
 		void print_grid(void);
 
 };
@@ -50,6 +51,8 @@ Grid::Grid(void) {
 }
 
 void Grid::update_sums_grid() {
+	//TODO: loop through grid and calculate the sums
+	sums_grid_is_valid = true;
 }
 
 void Grid::update_value_simple(const int& x, const int& y, const int& val) {
@@ -80,9 +83,14 @@ int Grid::query_span_simple(const int& x1, const int& y1, const int& x2, const i
 }
 
 void Grid::update_value_complex(const int& x, const int& y, const int& val) {
+	if (!sums_grid_is_valid) {
+		update_value_simple(x,y,val);
+		//update_sums_grid();
+	}
 }
 
-int Grid::query_span_sum_complex(const int& x1, const int& y1, const int& x2, const int& y2) {
+int Grid::query_span_complex(const int& x1, const int& y1, const int& x2, const int& y2) {
+	return query_span_simple(x1, y1, x2, y2);
 }
 
 void Grid::print_grid(void) {
@@ -97,11 +105,11 @@ void Grid::print_grid(void) {
 
 int main() {
 	Grid grid;
-	grid.update_value_simple(1,1,6);
-	grid.update_value_simple(1,2,3);
-	grid.update_value_simple(11,9,2);
-	grid.update_value_simple(15,9,1);
+	grid.update_value_complex(1,1,6);
+	grid.update_value_complex(1,2,3);
+	grid.update_value_complex(11,9,2);
+	grid.update_value_complex(15,9,1);
 	grid.print_grid();
-	std::cout << grid.query_span_simple(0,0,15,9) << std::endl;
+	std::cout << grid.query_span_complex(0,0,15,9) << std::endl;
 	return 0;
 }
