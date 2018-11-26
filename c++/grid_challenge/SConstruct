@@ -1,0 +1,4 @@
+# Initialize the environment
+env = Environment()
+
+env.Program(target = "grids", CXXFLAGS="-std=c++11", source = ["main.cpp", "grids.cpp"])

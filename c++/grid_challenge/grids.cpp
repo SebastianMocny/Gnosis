@@ -9,32 +9,9 @@
  * Date of file creation: Nov 23, 2018
  */
 
+#include "grids.h"
 #include <iostream>
 #include <vector>
-
-const int GRID_ROW_COUNT = 10;
-const int GRID_ROW_LENGTH = 20;
-
-class Grid {
-	private:
-		std::vector<std::vector<int>> val_grid;
-		std::vector<std::vector<int>> sums_grid;
-		std::vector<std::vector<int>> construct_zero_grid(const int& x_columns, const int& y_rows);
-		bool sums_grid_is_valid = false;
-		void update_sums_grid(); // Worst case o(n^4). This will run through and generate the values to the sums_grid. TODO: If the grid is already generated, then only sections that were affected by an update need to be worked out - implementation is up to debate
-	public:
-		Grid();
-		// Simple and complex do the same thing in a different way, with a tradeoff in time/space complexity
-		// TODO: Overload these functions using a prediction method (Bayes prior?) to determine whether to use simple or complex and switch between the two
-		// This will require us to keep track of the calls made, and to compare #of calls to update vs. calls to query
-		void update_value_simple(const int& x, const int& y, const int& val); // O(1)
-		int query_span_simple(const int& x1, const int& y1, const int& x2, const int& y2); // O(n^2)
-
-		void update_value_complex(const int& x, const int& y, const int& val); // O(1) - See note below
-		int query_span_complex(const int& x1, const int& y1, const int& x2, const int& y2); // O(1) if update has not been called. Otherwise, a worst case O(n^4) "update" operation is required
-		void print_grid(void);
-
-};
 
 std::vector<std::vector<int>> Grid::construct_zero_grid(const int& rows, const int& row_length) {
 		std::vector<std::vector<int>> zero_grid;
@@ -48,6 +25,8 @@ std::vector<std::vector<int>> Grid::construct_zero_grid(const int& rows, const i
 Grid::Grid(void) {
 	val_grid = construct_zero_grid(GRID_ROW_COUNT, GRID_ROW_LENGTH);
 	sums_grid = construct_zero_grid(GRID_ROW_COUNT, GRID_ROW_LENGTH);
+	// A zero grid will be correctly represented by a zero sums_grid
+	sums_grid_is_valid = true;
 }
 
 void Grid::update_sums_grid() {
@@ -55,7 +34,7 @@ void Grid::update_sums_grid() {
 	sums_grid_is_valid = true;
 }
 
-void Grid::update_value_simple(const int& x, const int& y, const int& val) {
+void Grid::update_value(const int& x, const int& y, const int& val) {
 	if (val_grid.empty()) {
 		//TODO: error checking without throwing exception?
 		std::cout << "empty grid error" << std::endl;
@@ -66,6 +45,7 @@ void Grid::update_value_simple(const int& x, const int& y, const int& val) {
 		return;
 	}
 	val_grid[y][x] = val;
+	sums_grid_is_valid = false;
 }
 
 int Grid::query_span_simple(const int& x1, const int& y1, const int& x2, const int& y2) {
@@ -82,13 +62,6 @@ int Grid::query_span_simple(const int& x1, const int& y1, const int& x2, const i
 	return span_sum;
 }
 
-void Grid::update_value_complex(const int& x, const int& y, const int& val) {
-	if (!sums_grid_is_valid) {
-		update_value_simple(x,y,val);
-		//update_sums_grid();
-	}
-}
-
 int Grid::query_span_complex(const int& x1, const int& y1, const int& x2, const int& y2) {
 	return query_span_simple(x1, y1, x2, y2);
 }
@@ -96,20 +69,21 @@ int Grid::query_span_complex(const int& x1, const int& y1, const int& x2, const 
 void Grid::print_grid(void) {
 	for (auto row : val_grid) {
 		for (auto in : row) {
-				std::cout << in;
+			std::cout << in;
 		}
 		std::cout << "\n";
 	}
 }
 	
 
-int main() {
+/*int main() {
 	Grid grid;
-	grid.update_value_complex(1,1,6);
-	grid.update_value_complex(1,2,3);
-	grid.update_value_complex(11,9,2);
-	grid.update_value_complex(15,9,1);
+	grid.update_value(1,1,6);
+	grid.update_value(1,2,3);
+	grid.update_value(11,9,2);
+	grid.update_value(15,9,1);
 	grid.print_grid();
 	std::cout << grid.query_span_complex(0,0,15,9) << std::endl;
 	return 0;
 }
+*/
