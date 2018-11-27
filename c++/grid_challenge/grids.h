@@ -16,7 +16,7 @@ class Grid {
 		// Worst case o(n^4). 
 		// This will run through and generate the values to the sums_grid.
 		// TODO: If the grid is already generated, then only sections that were affected by an update need to be worked out - implementation is up to debate
-		void update_sums_grid();
+		void update_sums_grid(const int& x, const int& y, const int& val);
         
 		int query_span_brute_force(const int& x1, const int& y1, const int& x2, const int& y2); // O(n^2)
         int query_span_sums_grid(const int& x1, const int& y1, const int& x2, const int& y2); // O(1) if update has not been called. Otherwise, a worst case O(n^4) "update" operation is required
