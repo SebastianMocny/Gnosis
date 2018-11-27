@@ -48,11 +48,7 @@ void Grid::update_value(const int& x, const int& y, const int& val) {
 	sums_grid_is_valid = false;
 }
 
-int Grid::query_span_simple(const int& x1, const int& y1, const int& x2, const int& y2) {
-	if (x1 > x2 || y1 > y2 || x2 >= GRID_ROW_LENGTH || y2 >= GRID_ROW_COUNT) {
-		std::cout << "Invalid query range in grid";
-		return -1;
-	}
+int Grid::query_span_brute_force(const int& x1, const int& y1, const int& x2, const int& y2) {
 	int span_sum;
 	for (auto i = y1; i <= y2; i++) {
 		for (auto j = x1; j <= x2; j++) {
@@ -62,28 +58,49 @@ int Grid::query_span_simple(const int& x1, const int& y1, const int& x2, const i
 	return span_sum;
 }
 
-int Grid::query_span_complex(const int& x1, const int& y1, const int& x2, const int& y2) {
-	return query_span_simple(x1, y1, x2, y2);
+int Grid::query_span_sums_grid(const int& x1, const int& y1, const int& x2, const int& y2) {
+	return query_span_brute_force(x1, y1, x2, y2);
+}
+
+int Grid::query_span(const int& x1, const int& y1, const int& x2, const int& y2) {
+	if (x1 > x2 || y1 > y2 || x2 >= GRID_ROW_LENGTH || y2 >= GRID_ROW_COUNT) {
+		std::cout << "Invalid query range in grid";
+		return -1;
+	}
+	if (sums_grid_is_valid) {
+		query_span_sums_grid(x1, y1, x2, y2);
+	} else {
+		query_span_brute_force(x1, y1, x2, y2);
+	}
 }
 
 void Grid::print_grid(void) {
+	std::cout << "_________ GRID ________ \n";
 	for (auto row : val_grid) {
 		for (auto in : row) {
-			std::cout << in;
+			if (in == 0) {
+				std::cout << " ";
+			} else {
+				std::cout << in;
+			}
+		}
+		std::cout << "\n";
+	}
+	std::cout << "_____ SUMS GRID _____";
+	if (sums_grid_is_valid) {
+		std::cout << "Is up to date\n";
+	} else {
+		std::cout << "NOT up to date!!\n";
+	}
+	for (auto row : sums_grid) {
+		for (auto in : row) {
+			if (in == 0) {
+				std::cout << " ";
+			} else {
+				std::cout << in;
+			}
 		}
 		std::cout << "\n";
 	}
 }
-	
 
-/*int main() {
-	Grid grid;
-	grid.update_value(1,1,6);
-	grid.update_value(1,2,3);
-	grid.update_value(11,9,2);
-	grid.update_value(15,9,1);
-	grid.print_grid();
-	std::cout << grid.query_span_complex(0,0,15,9) << std::endl;
-	return 0;
-}
-*/

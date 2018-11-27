@@ -19,6 +19,6 @@ int main() {
     grid.update_value(11,9,2);
     grid.update_value(15,9,1);
     grid.print_grid();
-    std::cout << grid.query_span_complex(0,0,15,9) << std::endl;
+    std::cout << "\nQuery for 0 0 15 9 = " << grid.query_span(0,0,15,9) << std::endl;
     return 0;
 }
